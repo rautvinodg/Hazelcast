@@ -25,10 +25,16 @@ public class MainConfig {
 	public HazelcastInstance HazelCast() {
 				
 		Config config = new Config();
+		
+		/**
+		*	We need to use same cluster name in all the instances
+		*	so instances on same or different nodes will be part of
+		*	same cluster. 
+		*/
 		config.setClusterName(clusterName);
 		config.setInstanceName(clusterName);
 
-        NetworkConfig network = config.getNetworkConfig();
+        	NetworkConfig network = config.getNetworkConfig();
 		JoinConfig join = network.getJoin();
 		join.getMulticastConfig().setEnabled(false);
 		join.getTcpIpConfig().setEnabled(true);
@@ -41,6 +47,14 @@ public class MainConfig {
 		
 		try {
         IScheduledExecutorService es = hz.getScheduledExecutorService ("default");
+		
+		/**
+		*	Having same task name in the cluster will restrict the multiple tasks
+		*	in the cluster and execution will be single instance
+		*	when 1st instance will execute below code the task will be created
+		*	further instances will not be able to register same name tasks
+		*	and the will have ‘DuplicateTaskException’ error 
+		*/
 		IScheduledFuture <?> Future = es.scheduleAtFixedRate(
 				TaskUtils.named(taskName, new HelloTask()),
 				5, 30, TimeUnit.SECONDS);
