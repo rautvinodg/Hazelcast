@@ -1,1 +1,3 @@
-# Hazelcast
+Hazelcast framework is open source library which provides scalable distributed caching and task execution in clustered environment. Hazelcast is a lightweight and easy to use. Since Hazelcast is delivered as a compact library (JAR) and since it has no external dependencies other than Java, it easily plugs into your software solution and provides distributed data structures and distributed computing utilities.
+
+Hazelcast’s scheduled executor service (IScheduledExecutorService) is a data structure which implements the java.util.concurrent.ScheduledExecutorService, partially. Here, partially means that it allows the scheduling of a single future execution and/or at a fixed rate execution but not at a fixed delay.
